@@ -6,14 +6,12 @@ Um sistema web de gestão de estoque desenvolvido em **Golang**, utilizando o fr
 
 - **Categorias**: Classifique os produtos em categorias específicas.
 - **Produtos**: Gerencie informações detalhadas de cada produto.
-- **Controle**: Acompanhe a quantidade disponível de cada produto no estoque.
 - **Status**: Identifique se os produtos estão disponíveis ou indisponíveis.
 
 ## Estrutura do Projeto
 
 - **Categoria**: Representa a categoria a que o produto pertence (ex.: Eletrônicos, Alimentos, Roupas).
 - **Produto**: Representa o produto, contendo informações como nome, descrição, preço, etc.
-- **Controle**: Gerencia a quantidade de produtos disponíveis no estoque.
 - **Status**: Define o status de disponibilidade do produto (disponível ou não).
 
 ## Tecnologias Utilizadas
@@ -23,7 +21,8 @@ Um sistema web de gestão de estoque desenvolvido em **Golang**, utilizando o fr
 - **Docker** e **Docker Compose**: Para containerizar a aplicação.
 - **SQL Server**: Banco de dados utilizado para armazenar informações.
 - **Postman**: utilizado para testar as solicitação HTTP
-- **HTML, CSS E JAVASCRIPT**: Para o front-end simples
+
+
 
 ## Como Rodar o Projeto
 
