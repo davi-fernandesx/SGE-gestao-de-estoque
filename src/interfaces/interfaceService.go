@@ -5,9 +5,9 @@ package interfaces
 //usado em todo Service
 type ServiceCrud[t any] interface {
 /*  esse T any, é um tipo generico, aonde posso passar todos os models como parametro*/
-	Save(entity t) 
-	SearchID(id int) 
+	Save(entity t) error
+	SearchID(id int) (t, error)
 	Update(entity t) 
 	Delete(entity t) 
-	SearchAll()
-}
+	SearchAll() ([]t, error)
+}	

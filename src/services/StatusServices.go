@@ -16,3 +16,4 @@ func NewStatusService(rs interfaces.RepositoryCrud[models.Status]) interfaces.Se
 	}
 
 }
+
