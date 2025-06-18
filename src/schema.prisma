@@ -1,8 +1,0 @@
-model Controler {
-    id_controle Int @id
-    id_produto Int
-    id_status Int
-    quantidade Int
-    data DateTime
-  
-}
