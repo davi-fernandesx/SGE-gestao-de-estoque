@@ -7,7 +7,16 @@ import (
 )
 
 type ProdutoRepository struct {
-	Repository
+	*Repository
+}
+
+
+func NewProdutoRepository(db *configs.Connection) interfaces.RepositoryCrud[models.Produtos] {
+
+	return &ProdutoRepository{
+
+		Repository: NewRepository(db),
+	}
 }
 
 // Create implements interfaces.RepositoryCrud.
@@ -35,10 +44,3 @@ func (p *ProdutoRepository) Update(entity models.Produtos) error {
 	panic("unimplemented")
 }
 
-func NewProdutoRepository(db *configs.Connection) interfaces.RepositoryCrud[models.Produtos] {
-
-	return &ProdutoRepository{
-
-		Repository: *NewRepository(db),
-	}
-}

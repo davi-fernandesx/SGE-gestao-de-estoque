@@ -7,8 +7,16 @@ import (
 )
 
 type CategoriasRepository struct {
-	Repository
+	*Repository
 }
+
+func NewCategoriaRepository(db *configs.Connection) interfaces.RepositoryCrud[models.Categorias] {
+
+	return &CategoriasRepository{
+		Repository: NewRepository(db),
+	}
+}
+
 
 // Create implements interfaces.RepositoryCrud.
 func (c *CategoriasRepository) Create(entity models.Categorias) error {
@@ -35,9 +43,3 @@ func (c *CategoriasRepository) Update(entity models.Categorias) error {
 	panic("unimplemented")
 }
 
-func NewCategoriaRepository(db *configs.Connection) interfaces.RepositoryCrud[models.Categorias] {
-
-	return &CategoriasRepository{
-		Repository: *NewRepository(db),
-	}
-}
