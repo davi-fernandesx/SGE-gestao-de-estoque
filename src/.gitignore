@@ -1,5 +1,4 @@
-.env
-schema.prisma
+
 
 
 comando para verificar se os container estar na mesma rede;

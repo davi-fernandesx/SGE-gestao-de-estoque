@@ -1,20 +1,27 @@
-#imagem base de golang
-FROM golang:1.22.2-alpine
+##build
+FROM golang:1.22.2-alpine AS builder
 
-#instalar dependencias adicionais
-RUN apk add --no-cache git 
+#instalando dependencias
+RUN apk add --no-cache git
 
-#definir diretorio de trabalho no container
-WORKDIR /app
+WORKDIR /app 
 
-#copiar arquivos do projeto para o container
+##arquivos de dependencia
+COPY go.mod go.sum ./
+RUN go mod download
+
+##copiando o resto do codigo e copilando
 COPY . .
+RUN  go build -ldflags="-s -w" -o meuApp
 
-#baixar dependencias e copilar o app
-RUN go mod tidy && go build -o app main.go
+#garantindo o binario executavel
+RUN chmod +x /app/meuApp    
 
-#expor a porta
+#port
 EXPOSE 8080
+# Instala dependências para SQL Server (ODBC)
+RUN apk add --no-cache freetds unixodbc ca-certificates
 
-#comando para rodar o app
-CMD [ "./app" ]
+#execução
+CMD [ "/app/meuApp"]
+

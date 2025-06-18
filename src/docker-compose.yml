@@ -1,39 +1,61 @@
 services:
-  db:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    container_name: SGE-banco-de-dados
-    ports:
-      - "1433:1433"
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest  # Especifique a versão
+    container_name: sqlserver
+    hostname: sqlserver  # Adicione esta linha
+    env_file:
+      - .env.docker
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=Password1!
+      - SA_PASSWORD=${SA_PASSWORD}
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
     volumes:
-      - sqlserver:/var/opt/mssql
-    restart: always
-    networks:
-      - sge-network
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -U sa -P \"$${SA_PASSWORD}\" -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 20s  # Aumente o timeout
+      retries: 15
+      start_period: 60s  # Dê mais tempo para inicialização
 
-  api:
-    build:
-      context: .
-    container_name: SGE-container
+  sge:
+    build: .
+    container_name: sge-app
     ports:
       - "8080:8080"
+    env_file:
+      - .env.docker
     environment:
-      DB_SERVER: ${DB_SERVER}
-      DB_PORT: ${DB_PORT}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_DATABASE: ${DB_DATABASE}
-      PORT: ${PORT}
-    volumes:
-      - ./SGE:/main
+      - DB_HOST=sqlserver  # Use o nome do container diretamente
+      - DB_USER=sa
+      - DB_PASSWORD=${SA_PASSWORD}
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    entrypoint: /bin/sh -c "while ! nc -z sqlserver 1433; do sleep 2; done && /app/meuApp"
     networks:
-    - sge-network
+      - network-sge
+
+  db-init:
+    image: mcr.microsoft.com/mssql-tools
+    volumes:
+      - ./configs:/scripts
+    env_file:
+      - .env.docker
+    entrypoint: /bin/bash -c "while ! nc -z sqlserver 1433; do sleep 2; done && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P \"$${SA_PASSWORD}\" -d master -i /scripts/SGE.sql || exit 0"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - network-sge
 
 networks:
-      sge-network:
-        driver: bridge
+  network-sge:
+    driver: bridge
+
+
 volumes:
-      sqlserver:
-     
+  sqlserver_data:
+    name: sge_sql_data
