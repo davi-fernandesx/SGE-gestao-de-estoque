@@ -1,7 +1,7 @@
 create database SGE;
-
+go
 use SGE;
-
+go
 CREATE TABLE Categorias(
 
     ID_Categoria int PRIMARY KEY IDENTITY(1,1),
@@ -20,19 +20,19 @@ create table Produtos(
     validade DATE not NULL
 
 );
-
+go
 
 CREATE table status(
     ID_Status int PRIMARY key IDENTITY(1,1),
     nome VARCHAR(10) not null
 );
 
-
+go
 alter table Produtos
 add CONSTRAINT fk_categoria
 FOREIGN key (ID_Categoria)
 REFERENCES Categorias(ID_Categoria);
-
+go
 alter table Produtos
 add constraint fk_status
 foreign key (ID_Status)
