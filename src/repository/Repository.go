@@ -1,17 +1,16 @@
 package repository
 
-
 import (
-	
+	"database/sql"
 
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/configs"
+
 )
 
 type Repository struct {
-	Db *configs.Connection
+	Db *sql.DB
 }
 
-func NewRepository(db *configs.Connection)*Repository{
+func NewRepository(db *sql.DB)*Repository{
 
 	
 	return &Repository{

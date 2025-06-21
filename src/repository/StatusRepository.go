@@ -1,7 +1,9 @@
 package repository
 
 import (
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/configs"
+	"database/sql"
+	"fmt"
+
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
 )
@@ -10,7 +12,7 @@ type StatusRepository struct {
 	*Repository
 }
 
-func NewStatusRepository(db *configs.Connection) interfaces.RepositoryCrud[models.Status] {
+func NewStatusRepository(db *sql.DB) interfaces.RepositoryCrud[models.Status] {
 
 	return &StatusRepository{
 		Repository: NewRepository(db),
@@ -19,25 +21,25 @@ func NewStatusRepository(db *configs.Connection) interfaces.RepositoryCrud[model
 
 // Create implements interfaces.RepositoryCrud.
 func (s *StatusRepository) Create(entity models.Status) error {
-	panic("unimplemented")
+	return fmt.Errorf("teste")
 }
 
 // Delete implements interfaces.RepositoryCrud.
 func (s *StatusRepository) Delete(entity models.Status) error {
-	panic("unimplemented")
+	return fmt.Errorf("teste")
 }
 
 // FindAll implements interfaces.RepositoryCrud.
 func (s *StatusRepository) FindAll() ([]models.Status, error) {
-	panic("unimplemented")
+	return []models.Status{},fmt.Errorf("teste")
 }
 
 // FindById implements interfaces.RepositoryCrud.
 func (s *StatusRepository) FindById(id int) (models.Status, error) {
-	panic("unimplemented")
+	return models.Status{}, fmt.Errorf("teste")
 }
 
 // Update implements interfaces.RepositoryCrud.
 func (s *StatusRepository) Update(entity models.Status) error {
-	panic("unimplemented")
+	return fmt.Errorf("teste")
 }
