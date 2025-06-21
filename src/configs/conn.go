@@ -9,14 +9,10 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 )
 
-type Connection struct {
-
-	Db *sql.DB
-
-}
 
 
-func  conn() (*Connection, error) {
+
+func  conn() (*sql.DB, error) {
 	// Obter variáveis de ambiente
 	db_server:= os.Getenv("DB_SERVER")
 	db_port:= os.Getenv("DB_PORT")
@@ -46,8 +42,6 @@ func  conn() (*Connection, error) {
 	log.Println("INFO: conexão ao banco de dados feita!!")
 
 	//colocanco a conexão db, na struct
-	return &Connection{
-		Db: db,
-	}, nil
+	return db, nil
 
 }
