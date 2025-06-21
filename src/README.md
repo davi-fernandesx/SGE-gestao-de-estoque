@@ -62,3 +62,7 @@ Certifique-se de que você tem as seguintes ferramentas instaladas:
 6. Verifique os logs:
       ```bash
          docker-compose logs -f
+
+
+
+
