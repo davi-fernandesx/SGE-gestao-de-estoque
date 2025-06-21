@@ -1,0 +1,217 @@
+@startuml diagramaDeClasses
+
+' interface contendo os metados CRUD do pacote service 
+interface ServiceCrud  {
+
+    +save(entity t) error
+    +SearchID(id int) (t, error)
+	  +Update(entity t) 
+	  +Delete(entity t) 
+	  +SearchAll() ([]t, error)
+
+
+}
+
+'classe base de service aonde os metados de ServiceCrud vão ser implementados e herdados pelas classes 'categoriaService, StatusService e ProdutoService'
+class BaseService{
+
+  -Repo RepositoryCrud[t]
+
+   <<constructor>>+NewBaseService[t any](repo RepositoryCrud[t]) *BaseService[t]{}
+
+    +(b *BaseService[t]) Save(entity t) error
+    +(b *BaseService[t]) SearchID(id int) (t, error)
+	  +(b *BaseService[t]) Update(entity t)
+	  +(b *BaseService[t]) Delete(entity t)
+	  +(b *BaseService[t]) SearchAll() ([]t , error)
+
+}
+
+'indicando quq a classe BaseService implementa a interface ServiceCrud
+class BaseService implements ServiceCrud 
+class CategoriaService{
+
+  -*BaseService[Categoria]
+
+  <<constructor>>NewCategoriaService(rc RepositoryCrud[Categorias])ServiceCrud[Categorias]{}
+}
+
+class StatusService{
+
+  -*BaseService[Status]
+
+  <<constructor>>NewStatusService(rs RepositoryCrud[status] ServiceCrud[Status]{}
+}
+
+class ProdutoService{
+  -*BaseService[Produtos]
+
+  <<constructor>>NewProdutoService(rp RepositoryCrud[Produtos]) ServiceCrud[Produtos]{}
+}
+
+
+'indicando que as classes CategoriaService, statusService e ProdutoService 'herdam' os metados de BaseService por meio de composição
+CategoriaService *-- BaseService : composition
+StatusService *-- BaseService : composition
+ProdutoService *-- BaseService : composition
+
+
+'interface contendo os metados para manipular o banco de dados
+interface RepositoryCrud {
+    +Create(entity t) error
+    +GetByID(id int) (t, error)
+    +Update(entity t) error
+    +Delete(id int) error
+    +FindAll()([]t, error)
+}
+
+
+'classes para manipular o banco de dados de acordo com qual objeto é
+class CategoriaRepository{
+
+  -*Repository
+  <<constructor>>NewCategoriaRepository(db *Connection) RepositoryCrud[categorias]{}
+}
+
+class StatusRepository{
+  -*Repository
+  <<constructor>>NewStatusRepository(db *Connection) RepositoryCrud[Status]{}
+}
+
+class ProdutoRepository{
+
+  -*Repository
+  <<constructor>>NewProdutoRepository(db *Connection) RepositoryCrud[Produtos]{}
+
+}
+
+'classe destinada a fazer a conexão com o banco de dados
+class Repository {
+
+  -db  *Connection
+
+  <<constructor>>NewRepository(db *Connection)*Repository{}
+}
+
+
+'indicando que RepositopryCrud compõe baseService
+BaseService *-- RepositoryCrud : composition
+'indicando que as classes CategoriaRepository, StatusRepository e ProdutoRepository implenta a classe ReopositoryCrud com seus metados e os 
+'implementa cada qual de sua maneira
+class StatusRepository implements RepositoryCrud
+class CategoriaRepository implements RepositoryCrud
+class ProdutoRepository implements RepositoryCrud
+
+'indicando que repository compões as classes listadas
+StatusRepository *-- Repository : composition
+CategoriaRepository *-- Repository : composition
+ProdutoRepository *-- Repository : composition
+
+'interfaces contendo os metados Rest
+interface ControllerApiRest {
+
+  +Get() http.HandlerFunc
+	+GetAll() http.HandlerFunc
+	+Post()http.HandlerFunc
+	+Delete()http.HandlerFunc
+	+Update()http.HandlerFunc
+}
+
+'classe base para manipular as requisições http
+class BaseController {
+  -service ServiceCrud[t]  
+
+  <<constructor>>NewBaseController[t any](service ServiceCrud[t])*BaseController[t]{}
+
+  +(bc *BaseController[t]) GetAll() http.HandlerFunc
+  +(bc *BaseController[t]) Get() http.handlerFunc
+  +(bc *BaseController[t]) Post() http.HandlerFunc
+  +(bc *BaseController[t]) Delete() http.HandlerFunc
+  + (bc *BaseController[t]) Update() http.HandlerFunc
+  
+}
+
+' classes herdando baseController 
+class CategoriaController{
+
+  -*BaseController[Categorias]
+
+  <<constructor>>NewCategoriaController(sc ServiceCrud[Categorias]) ControllerApiRest[Categorias]{}
+}
+
+class StatusController{
+  -*BaseController[Status]
+
+  <<constructor>> NewStatusController(ss ServiceCrud[Status]) ControllerApiRest[Status]{}
+}
+
+class ProdutoController{
+
+  -*BaseController[models.Produtos]
+
+  <<constructor>> NewProdutoController(sp ServiceCrud[Produtos])ControllerApiRest[Produtos]{}
+
+}
+
+'indica que serviceCrud compõe BaseController
+BaseController *-- ServiceCrud : composition
+
+'idicando que a classe baseControlle implementa a interface ControllerApiRest
+class BaseController implements ControllerApiRest
+
+'indica que BaseController compõe as classes abaixo
+ CategoriaController *-- BaseController :composition
+ StatusController *-- BaseController :composition
+ ProdutoController *-- BaseController :composition
+
+'aqui começa as models do projeto
+class Produto {
+
+  -id_produto int
+  -nome string
+  -preco float
+  -lote string
+  -validade date
+  -categioriaID int
+  -statusID int
+}
+
+class Status {
+
+  -id_status int
+  -nome string
+}
+
+class Categoria {
+  -id_categoria int
+  -nome string
+}
+
+'dtos
+class ProdutoDTO {
+
+  -status status
+  -categoria categoria
+  -nome string 
+  -preco float
+  -lote string
+  -validade date
+}
+
+class CategoriaDTO {
+
+  -nome string
+
+}
+
+class StatusDTO {
+
+  -nome string
+}
+
+Produto *-- ProdutoDTO : DTO
+Categoria *-- CategoriaDTO : DTO
+Status *-- StatusDTO : DTO
+
+
+@enduml
