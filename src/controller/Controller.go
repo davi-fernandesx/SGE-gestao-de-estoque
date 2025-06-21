@@ -28,16 +28,10 @@ func (bc *BaseController[t]) GetAll() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		log.Println("INFO: função GetAll do controller chamada")
-		if r.Method != http.MethodGet {
-
-			http.Error(w, "request não aceito, request Get esperado", http.StatusMethodNotAllowed)
-			return
-		}
 
 		result, err := bc.service.SearchAll()
 		if err != nil {
-			log.Printf("ERRO: erro encontrado em SearchAll do pacote service: %w", err)
+			log.Printf("ERRO: erro encontrado em SearchAll do pacote service: %v", err)
 			http.Error(w, "erro ao buscar os registros", http.StatusBadGateway)
 			return
 		}
@@ -56,18 +50,11 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		log.Println("INFO: função Get do controller chamada")
-		if r.Method != http.MethodGet {
-
-			http.Error(w, "request nao aceito, request Get esperado", http.StatusMethodNotAllowed)
-			return
-
-		}
-
 		param := r.URL.Query().Get("id")
 		if param == "" {
 			log.Println("ERRO: cliente não passou o parametro id")
 			http.Error(w, "favor, passar um id", http.StatusBadRequest)
+			return 
 		}
 
 		id, err := strconv.Atoi(param)
@@ -79,8 +66,9 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 
 		result, err := bc.service.SearchID(id)
 		if err != nil {
-			log.Printf("ERRO: erro encontrado em SearchID do pacote service: %w", err)
+			log.Printf("ERRO: erro encontrado em SearchID do pacote service: %v", err)
 			http.Error(w, "erro ao buscar registro", http.StatusBadGateway)
+			return 
 		}
 
 		response := map[string]any{
@@ -97,19 +85,12 @@ func (bc *BaseController[t]) Post() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		log.Println("INFO: função Post do pacote controller chamada")
-		if r.Method != http.MethodPost {
-
-			http.Error(w, "request nao aceito, request Post esperado", http.StatusMethodNotAllowed)
-			return
-
-		}
 		var request t
 
 		err := json.NewDecoder(r.Body).Decode(&request)
 		if err != nil {
 
-			log.Printf("ERRO: erro ao decodificar json: %w", err)
+			log.Printf("ERRO: erro ao decodificar json: %v", err)
 			http.Error(w, "dados invalidos", http.StatusBadRequest)
 			return
 		}
