@@ -9,7 +9,7 @@ type CategoriaController struct {
 	*BaseController[models.Categorias]
 }
 
-func NewCategoriaController(sc interfaces.ServiceCrud[models.Categorias]) interfaces.ControllerApiRest[models.Categorias]{
+func NewCategoriaController(sc interfaces.ServiceCrud[models.Categorias]) *CategoriaController{
 
 	return &CategoriaController{
 		BaseController: NewBaseController[models.Categorias](sc),

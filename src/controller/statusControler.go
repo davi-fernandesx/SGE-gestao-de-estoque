@@ -9,7 +9,7 @@ type StatusController struct {
 	*BaseController[models.Status]
 }
 
-func NewStatusController(ss interfaces.ServiceCrud[models.Status]) interfaces.ControllerApiRest[models.Status]{
+func NewStatusController(ss interfaces.ServiceCrud[models.Status]) *StatusController{
 
 	return &StatusController{
 		BaseController: NewBaseController[models.Status](ss),

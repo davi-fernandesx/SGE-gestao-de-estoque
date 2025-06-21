@@ -10,7 +10,7 @@ type ProdutoController struct {
 }
 
 
-func NewProdutoController(sp interfaces.ServiceCrud[models.Produtos]) interfaces.ControllerApiRest[models.Produtos]{
+func NewProdutoController(sp interfaces.ServiceCrud[models.Produtos]) *ProdutoController{
 
 	return &ProdutoController{
 		BaseController: NewBaseController[models.Produtos](sp),
