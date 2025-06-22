@@ -10,22 +10,24 @@ import (
 
 func RoutesStatus(mux *http.ServeMux, StatusController *controller.StatusController) {
 
-	mux.HandleFunc("/getStatus", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/status", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					StatusController.Get()),
 				),
 			)
 
-	mux.HandleFunc("/getAllStatus",middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/status",middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					StatusController.GetAll()),
 				),
 			)
 
-	mux.HandleFunc("/PostStatus", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/status", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodPost},
 					StatusController.Post()),
 			),
 		)
 	log.Println("INFO: Rotas de Status carregadas.")
 }
+
+

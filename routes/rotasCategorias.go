@@ -10,19 +10,19 @@ import (
 
 func RoutesCategorias(mux *http.ServeMux, categoriaController *controller.CategoriaController) {
 
-	mux.HandleFunc("/getCategoria",
+	mux.HandleFunc("/api/categoria",
 			middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					categoriaController.Get()),	
 					),)
 
-	mux.HandleFunc("/getAllCategoria", 
+	mux.HandleFunc("/api/categorias", 
 			middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					categoriaController.GetAll()),
 			))
 
-	mux.HandleFunc("/PostCategoria",
+	mux.HandleFunc("/api/categoria",
 			middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodPost},
 				categoriaController.Post()),

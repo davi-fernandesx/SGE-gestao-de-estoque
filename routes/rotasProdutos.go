@@ -11,17 +11,17 @@ import (
 func RoutesProduto(mux *http.ServeMux, ProdutoController *controller.ProdutoController) {
 
 
-	mux.HandleFunc("/getProduto", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/produto", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					ProdutoController.Get()),
 				),)
 
-	mux.HandleFunc("/getAllProduto",middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/produtos",middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					ProdutoController.GetAll()),
 				),)
 
-	mux.HandleFunc("/postProduto", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/produto", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					ProdutoController.Post()),
 				),)
