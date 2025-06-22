@@ -20,7 +20,7 @@ Um sistema web de gestão de estoque desenvolvido em **Golang**, utilizando o fr
 - **Gin**: Framework para criação de APIs REST em Golang.
 - **Docker** e **Docker Compose**: Para containerizar a aplicação.
 - **SQL Server**: Banco de dados utilizado para armazenar informações.
-- **Postman**: utilizado para testar as solicitação HTTP
+- **Insomnia**: utilizado para testar as solicitação HTTP
 
 
 
