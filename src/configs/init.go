@@ -16,10 +16,12 @@ func InitApplication() ( *sql.DB, error){
 	log.Println("SGE-SISTEMA DE GESTAO DE ESTOQUE!")
 	log.Print("desenvolvedores: Davi Fernandes e Paloma Brito" )
 		//carregando os arquivos .env
-		err:= godotenv.Load(".env")
+		err:= godotenv.Load("configs/.env")
 		if err != nil {
 	
 			log.Printf("erro ao carregar o arquivo .env: %v", err)
+			log.Printf("aplicação não pode seguir daqui")
+			log.Fatal()
 		}else {
 				log.Println("----------------------------------------------------------------")
 				log.Println("Carregando informações do banco de dados:")
