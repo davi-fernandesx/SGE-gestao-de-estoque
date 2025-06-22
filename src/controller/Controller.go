@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
+	"github.com/DaviFernandes034/SGE--gestao-de-estoque/utils"
 )
 
 
@@ -27,12 +28,12 @@ func NewBaseController[t any](service interfaces.ServiceCrud[t]) *BaseController
 func (bc *BaseController[t]) GetAll() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
-
+ 
 
 		result, err := bc.service.SearchAll()
 		if err != nil {
 			log.Printf("ERRO: erro encontrado em SearchAll do pacote service: %v", err)
-			http.Error(w, "erro ao buscar os registros", http.StatusBadGateway)
+			utils.ResponseJsonError(w, http.StatusBadGateway, "Erro ao buscar registros")
 			return
 		}
 
@@ -40,9 +41,7 @@ func (bc *BaseController[t]) GetAll() http.HandlerFunc {
 			"registros": result,
 		}
 
-		w.Header().Set("content-type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(response)
+		utils.ResponseJSON(w, http.StatusOK, response)
 	}
 }
 
@@ -53,21 +52,21 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 		param := r.URL.Query().Get("id")
 		if param == "" {
 			log.Println("ERRO: cliente não passou o parametro id")
-			http.Error(w, "favor, passar um id", http.StatusBadRequest)
+			utils.ResponseJsonError(w, http.StatusBadRequest, "passar o Id")
 			return 
 		}
 
 		id, err := strconv.Atoi(param)
 		if err != nil {
 
-			http.Error(w, "erro ao transformar o parametro id em tipo inteiro", http.StatusInternalServerError)
+			utils.ResponseJsonError(w, http.StatusInternalServerError, "Erro ao converter parametros Id")
 			return
 		}
 
 		result, err := bc.service.SearchID(id)
 		if err != nil {
 			log.Printf("ERRO: erro encontrado em SearchID do pacote service: %v", err)
-			http.Error(w, "erro ao buscar registro", http.StatusBadGateway)
+			utils.ResponseJsonError(w, http.StatusBadGateway, "Erro ao buscar o ID")
 			return 
 		}
 
@@ -75,9 +74,7 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 			"registro": result,
 		}
 
-		w.Header().Set("content-type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(response)
+		utils.ResponseJSON(w, http.StatusOK, response)
 	}
 }
 
@@ -91,20 +88,19 @@ func (bc *BaseController[t]) Post() http.HandlerFunc {
 		if err != nil {
 
 			log.Printf("ERRO: erro ao decodificar json: %v", err)
-			http.Error(w, "dados invalidos", http.StatusBadRequest)
+		    utils.ResponseJsonError(w, http.StatusBadRequest, "Dados invalidos")
 			return
 		}
 
 		err = bc.service.Save(request)
 		if err != nil {
 			log.Println("ERRO: falha em salvar os dados")
-			http.Error(w, "erro interno ao processar requisição", http.StatusInternalServerError)
+			utils.ResponseJsonError(w, http.StatusInternalServerError, "erro interno ao processar requisição")
 			return
 		}
 
-		w.Header().Set("content-type", "application/json")
-		w.WriteHeader(http.StatusCreated)
-		json.NewEncoder(w).Encode(request)
+
+		utils.ResponseJSON(w, http.StatusOK, request)
 
 	}
 
