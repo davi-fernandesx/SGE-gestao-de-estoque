@@ -10,7 +10,7 @@ import (
 
 func RoutesStatus(mux *http.ServeMux, StatusController *controller.StatusController) {
 
-	mux.HandleFunc("/api/status", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/statusGet", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					StatusController.Get()),
 				),
@@ -22,7 +22,7 @@ func RoutesStatus(mux *http.ServeMux, StatusController *controller.StatusControl
 				),
 			)
 
-	mux.HandleFunc("/api/status", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/statusPost", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodPost},
 					StatusController.Post()),
 			),

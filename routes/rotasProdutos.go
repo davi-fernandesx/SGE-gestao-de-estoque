@@ -11,7 +11,7 @@ import (
 func RoutesProduto(mux *http.ServeMux, ProdutoController *controller.ProdutoController) {
 
 
-	mux.HandleFunc("/api/produto", middleware.LoggerMiddleware(
+	mux.HandleFunc("/api/produtoGet", middleware.LoggerMiddleware(
 				middleware.MethodMiddleware([]string{http.MethodGet},
 					ProdutoController.Get()),
 				),)
