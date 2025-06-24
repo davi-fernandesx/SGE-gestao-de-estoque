@@ -53,17 +53,17 @@ A API do SGE expõe os seguintes endpoints principais:
 | Método | URL                       | Descrição                                 |
 | :----- | :------------------------ | :---------------------------------------- |
 | `GET`  | `/api/categorias`         | Lista todas as categorias de produtos.    |
-| `GET`  | `/api/categoria`          | Busca uma categoria específica pelo ID.   |
+| `GET`  | `/api/categoriaGet`          | Busca uma categoria específica pelo ID.   |
 | `POST` | `/api/categorias`         | Cria uma nova categoria.                  |
 | `PUT`  | `/api/categorias`         | Atualiza uma categoria existente.         |
 | `DELETE`| `/api/categoria`         | Deleta uma categoria.                     |
 | `GET`  | `/api/produtos`           | Lista todos os produtos no estoque.       |
-| `GET`  | `/api/produtos`           | Busca um produto específico pelo ID.      |
+| `GET`  | `/api/produtoGet`           | Busca um produto específico pelo ID.      |
 | `POST` | `/api/produtos`           | Adiciona um novo produto ao estoque.      |
 | `PUT`  | `/api/produtos`           | Atualiza as informações de um produto.    |
 | `DELETE`| `/api/produto`           | Remove um produto do estoque.             |
 | `GET`  | `/api/status`             | Lista todos os status de estoque.         |
-| `GET`  | `/api/status`             | Busca um status de estoque pelo ID.       |
+| `GET`  | `/api/statusGet`             | Busca um status de estoque pelo ID.       |
 | `POST` | `/api/status`             | Cria um novo status de estoque.           |
 | `PUT`  | `/api/status`             | Atualiza um status de estoque existente.  |
 | `DELETE`| `/api/status`            | Deleta um status de estoque.              |
