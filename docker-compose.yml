@@ -1,24 +1,26 @@
 services:
   sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest  # Especifique a versão
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
-    hostname: sqlserver  # Adicione esta linha
+    hostname: sqlserver
     env_file:
-      - .env.docker
+      - configs/.env # Mantém o arquivo de ambiente
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=${SA_PASSWORD}
+      # - SA_PASSWORD=davi2003 # REMOVA ESTA LINHA para usar a do .env
+      - SA_PASSWORD=Davi2003Ag0ra! # Use a variável do .env
       - MSSQL_PID=Express
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
     healthcheck:
+      # Use a variável para a senha aqui também, ou a senha forte diretamente
       test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -U sa -P \"$${SA_PASSWORD}\" -Q 'SELECT 1' || exit 1"]
       interval: 10s
-      timeout: 20s  # Aumente o timeout
+      timeout: 20s
       retries: 15
-      start_period: 60s  # Dê mais tempo para inicialização
+      start_period: 60s
 
   sge:
     build: .
@@ -26,14 +28,15 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - .env.docker
+      - configs/.env
     environment:
-      - DB_HOST=sqlserver  # Use o nome do container diretamente
+      - DB_HOST=sqlserver
       - DB_USER=sa
-      - DB_PASSWORD=${SA_PASSWORD}
+      - DB_PASSWORD=Davi2003Ag0ra! # Use a variável do .env
     depends_on:
       sqlserver:
         condition: service_healthy
+    # Mude localhost para sqlserver
     entrypoint: /bin/sh -c "while ! nc -z sqlserver 1433; do sleep 2; done && /app/meuApp"
     networks:
       - network-sge
@@ -43,7 +46,8 @@ services:
     volumes:
       - ./configs:/scripts
     env_file:
-      - .env.docker
+      - configs/.env
+    # Mude localhost para sqlserver e use a variável para a senha
     entrypoint: /bin/bash -c "while ! nc -z sqlserver 1433; do sleep 2; done && /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P \"$${SA_PASSWORD}\" -d master -i /scripts/SGE.sql || exit 0"
     depends_on:
       sqlserver:
@@ -54,7 +58,6 @@ services:
 networks:
   network-sge:
     driver: bridge
-
 
 volumes:
   sqlserver_data:
