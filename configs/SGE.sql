@@ -1,7 +1,8 @@
-create database SGE;
+/*create database SGE;
 go
 use SGE;
 go
+*/
 CREATE TABLE Categorias(
 
     ID_Categoria int PRIMARY KEY IDENTITY(1,1),
@@ -37,3 +38,43 @@ alter table Produtos
 add constraint fk_status
 foreign key (ID_Status)
 references status(ID_Status);
+
+
+/* atualizando tabelas de produtos, categorias e status*/
+
+alter table Produtos
+add  criacao datetime, atualizao datetime ;
+
+go
+
+alter table Categorias
+add  criacao datetime, atualizao datetime;
+
+go
+
+alter table Status
+add  criacao datetime, atualizao datetime;
+
+/* parte do usuario*/
+
+
+create table usuario (
+
+    ID int primary key  identity(1,1),
+    nome varchar(50) not null, 
+    email varchar(100) unique not null,
+    senha text not null,
+    criacao datetime,
+    atualizao datetime, 
+);
+
+go
+create table papeis (
+
+    id int primary key identity(1,1),
+    nome varchar(50) not null,
+    descricao text not null,
+
+);
+
+go
