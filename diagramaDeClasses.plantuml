@@ -214,4 +214,7 @@ Categoria *-- CategoriaDTO : DTO
 Status *-- StatusDTO : DTO
 
 
+'models das contas de cada usuario
+
+
 @enduml

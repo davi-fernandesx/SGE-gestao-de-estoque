@@ -9,7 +9,7 @@ import (
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/routes"
 )
 
-	func main(){
+func main(){
 
 			
 		db, err:= configs.InitApplication()
@@ -26,7 +26,7 @@ import (
 			log.Fatal(http.ListenAndServe(":8080", mux))
 
 	
-	}
+}
 
 
 func printMemoryUsage() {
