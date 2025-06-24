@@ -1,17 +1,16 @@
 package dtos
 
+import "time"
 
-
-
-type StatusDTO struct{
-
-	Nome string `json:"nome"`
+type StatusDTO struct {
+	Nome    string `json:"nome"`
+	Criacao time.Time `json:"criacao"`
+	Atualizao  time.Time `json:"atualizacao"`
 }
 
+func NewStatusDto(nome string) *StatusDTO {
 
-func NewStatusDto(nome string)*StatusDTO{
-
-	return&StatusDTO{
+	return &StatusDTO{
 		Nome: nome,
 	}
 }

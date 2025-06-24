@@ -10,7 +10,10 @@ type ProdutosDTO struct {
 	Preco      float64   		`json:"preco"`
 	Lote       string   		`json:"lote"`
 	Validade   time.Time 		`json:"validade"`
+	Criacao	   time.Time		`json:"criacao"`
+	Atualizao time.Time			`json:"atualizacao"`
 }
+
 
 
 func NewProdutoDTO(statusDto StatusDTO, categoriaDto CategoriasDTO, nome string, preco float64, lote string, validade time.Time) *ProdutosDTO {

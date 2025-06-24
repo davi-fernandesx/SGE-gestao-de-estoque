@@ -15,6 +15,8 @@ type Produtos struct{
     Validade time.Time `json:"validade"`
 	CategoriaId int64 `json:"categoriaId"`
 	StatusId int64 `json:"statusId"`
+	Criacao time.Time`json:"criacao"`
+	Atualizao time.Time`json:"atualizacao"`
 	
 
 }
