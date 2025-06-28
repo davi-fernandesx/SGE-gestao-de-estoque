@@ -9,5 +9,5 @@ type ServiceCrud[t any] interface {
 	SearchID(id int) (t, error)
 	Update(entity t) 
 	Delete(entity t) 
-	SearchAll() ([]t, error)
+	SearchAll() ([]t, error)	
 }	
