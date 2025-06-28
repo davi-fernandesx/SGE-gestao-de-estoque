@@ -8,7 +8,7 @@ import (
 
 func ResponseJSON(w http.ResponseWriter, statusCode int, data any){
 
-	w.Header().Set("content-type", "applicatioin/json")
+	w.Header().Set("content-type", "application/json")
 	w.WriteHeader(statusCode)
 
 	if data != nil {
