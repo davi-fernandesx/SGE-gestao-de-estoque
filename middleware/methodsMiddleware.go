@@ -24,3 +24,10 @@ func MethodMiddleware(metados []string, next http.HandlerFunc) http.HandlerFunc 
 
 	
 }
+/*
+Como funciona:
+Recebe uma lista de métodos permitidos (metados []string) e o próximo handler (next http.HandlerFunc).
+Quando a rota é chamada, verifica se o método da requisição está na lista usando slices.Contains.
+Se não estiver, retorna erro 405 (Method Not Allowed).
+Se estiver, chama o próximo handler normalmente.
+*/
