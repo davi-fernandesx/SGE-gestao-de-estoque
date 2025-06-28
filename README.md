@@ -1,4 +1,4 @@
-# Sistema de Gestão de Estoque - Documentação
+# Sistema de Gestão de Estoque - Documentação Primária
 
 ## Sumário
 
@@ -75,4 +75,4 @@ A API do SGE expõe os seguintes endpoints principais:
 Este projeto está sendo desenvolvido por:
 
 * **Davi Fernandes** - [GitHub](https://github.com/DaviFernandes034)
-* **Paloma Brito**
+* **Paloma Brito** - [GitHub](https://github.com/Paloma-B-Brito)
