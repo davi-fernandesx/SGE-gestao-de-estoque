@@ -1,0 +1,34 @@
+@startuml
+!theme plain
+
+package "configs" as Configs
+package "utils" as Utils
+package "middleware" as Middleware
+package "models" as Models
+package "interfaces" as Interfaces
+package "repository" as Repository
+package "services" as Services
+package "controller" as Controller
+package "routes" as Routes
+package "main.go" as Main
+
+Configs -down-> Repository
+Configs -down-> Services
+
+Utils ..> Repository
+Utils ..> Services
+Utils ..> Controller
+
+Middleware ..> Routes
+
+Models -down-> Repository
+Interfaces -down-> Repository
+Interfaces -down-> Services
+Interfaces -down-> Controller
+
+Repository -down-> Services
+Services -down-> Controller
+Controller -down-> Routes
+Routes -down-> Main
+
+@enduml
