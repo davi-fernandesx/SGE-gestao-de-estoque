@@ -1,4 +1,4 @@
-# Sistema de Gestão de Estoque - Documentação
+# Sistema de Gestão de Estoque - Documentação Primária
 
 ## Sumário
 
