@@ -6,7 +6,7 @@ go
 CREATE TABLE Categorias(
 
     ID_Categoria int PRIMARY KEY IDENTITY(1,1),
-    nome VARCHAR(15) not NULL
+    nome VARCHAR(15) not NULL unique
 );
  go
 
@@ -18,6 +18,7 @@ create table Produtos(
     nome VARCHAR(50) not null,
     preco DECIMAL not null,
     lote VARCHAR(20) not null,
+    quantidade int not null
     validade DATE not NULL
 
 );
@@ -25,7 +26,7 @@ go
 
 CREATE table status(
     ID_Status int PRIMARY key IDENTITY(1,1),
-    nome VARCHAR(10) not null
+    nome VARCHAR(10) not null unique
 );
 
 go
