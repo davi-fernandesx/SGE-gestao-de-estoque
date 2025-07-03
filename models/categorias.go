@@ -8,8 +8,8 @@ import (
 )
 
 type Categorias struct {
-	Id_categoria   uuid.UUID `json:"categoria_id"`
-	Nome         string `json:"nome"`
-	Criacao time.Time `json:"criacao"`
-	Atualizao time.Time`json:"atualizacao"`
+	Id_categoria   uuid.UUID 
+	Nome         string 
+	Criacao time.Time
+	Atualizao time.Time
 }

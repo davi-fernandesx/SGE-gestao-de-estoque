@@ -1,0 +1,19 @@
+[
+
+        {
+        "id":1,
+        "nome": "fone de ouvido",
+        "preco": 120.00,
+        "lote": "lote A",
+        "validade": "2025-07-03T10:00:00Z",
+        "quantidade":500,
+        "categoria": {
+            "id":1,
+            "nome": "informatica"
+        },
+        "status":{
+            "id":1,
+            "nome":"disponivel"
+        }
+    }
+]

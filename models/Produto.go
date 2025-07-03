@@ -8,16 +8,16 @@ import (
 
 type Produtos struct{
 
-	Id_produto uuid.UUID `json:"produto_id"`
-	Nome string `json:"nome"`
-	Preco float64 `json:"preco"`
-	Lote string `json:"lote"`
-    Validade time.Time `json:"validade"`
-	CategoriaId int64 `json:"categoriaId"`
-	StatusId int64 `json:"statusId"`
-	Criacao time.Time`json:"criacao"`
-	Atualizao time.Time`json:"atualizacao"`
-	
+	Id_produto uuid.UUID 
+	Nome string 
+	Preco float64 
+	Lote string 
+	Quantidade int
+    Validade time.Time 
+	CategoriaId int64 
+	StatusId int64 
+	Criacao time.Time
+	Atualizao time.Time
 
 }
 
