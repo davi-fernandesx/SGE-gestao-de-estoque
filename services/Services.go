@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-	"log"
 
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 )
@@ -30,75 +28,3 @@ func NewBaseService[t any](repo interfaces.RepositoryCrud[t]) *BaseService[t] {
 }
 
 
-/*
-	metados vindos do serviceCrud, contendo todos os metados que meus services irão usar
-
-	"func (b *BaseService[t])" aqui eu posso trocar o "BaseService[t]" por qualquer service que eu criar, que nao ira ter alteração 
-	"b" vai significar qualquer services que eu criar, como categoria, produto, ou status
-*/
-// Delete implements interfaces.ServiceCrud.
-func (b *BaseService[t]) Delete(entity t) {
-	log.Println("INFO: funcão Delete chamada")
-
-	err:= b.Repo.Delete(entity)
-	if err != nil {
-		log.Printf("ERRO: erro encontrado em delete do pacote repository: %v", err)
-		fmt.Errorf("erro em deletar registro: %v",err)
-
-	}
-}
-
-// Save implements interfaces.ServiceCrud.
-func (b *BaseService[t]) Save(entity t) error {
-	log.Println("INFO: função Save chamada")
-	err:=b.Repo.Create(entity)
-	if err != nil {
-		log.Printf("ERRO: erro encontrado em create do pacote repository:  %v", err)
-		return fmt.Errorf("erro em salvar os dados: %w", err)
-	}
-
-	log.Println("INFO: informações salvas com sucesso!")
-	return nil
-}
-
-// SearchAll implements interfaces.ServiceCrud.
-func (b *BaseService[t]) SearchAll() ([]t , error) {
-	
-	log.Println("INFO: função SearchAll chamada")
-	result ,err:=b.Repo.FindAll()
-	if err != nil {
-		log.Printf("ERRO: erro em FindAll: %v", err)
-		return nil, fmt.Errorf("erro em buscar todos os registros: %w", err)
-	}
-
-
-	return result, nil
-}
-
-// SearchID implements interfaces.ServiceCrud.
-func (b *BaseService[t]) SearchID(id int) (t, error){
-	log.Println("INFO: função SearchAll chamada")
-	result,err:=b.Repo.FindById(id)
-		if err != nil {
-			log.Printf("ERRO: erro ao FindById: %v", err)
-			var zero t
-			return zero, fmt.Errorf("erro em buscar um registro: %v", err)
-	}
-
-	return result, nil
-}
-
-// Update implements interfaces.ServiceCrud.
-func (b *BaseService[t]) Update(entity t) {
-	log.Println("INFO: função Update chamada")
-	err:=b.Repo.Update(entity)
-			if err != nil {
-			log.Printf("ERRO: erro em update do pacote repository: %v", err)
-			fmt.Errorf("erro em atualizar os dados: %v", err)
-	}
-
-
-}
-
-
-var _ interfaces.ServiceCrud[any] = (*BaseService[any])(nil)

@@ -8,6 +8,6 @@ type ServiceCrud[t any] interface {
 	Save(entity t) error
 	SearchID(id int) (t, error)
 	Update(entity t) 
-	Delete(entity t) 
+	Delete(id int) (error)
 	SearchAll() ([]t, error)	
 }	
