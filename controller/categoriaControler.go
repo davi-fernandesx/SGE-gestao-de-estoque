@@ -1,19 +1,21 @@
 package controller
 
 import (
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
+	"github.com/DaviFernandes034/SGE--gestao-de-estoque/services"
 )
 
 type CategoriaController struct {
+	
 	*BaseController[models.Categorias]
+	categoriaService *services.CategoriaService
 }
 
-func NewCategoriaController(sc interfaces.ServiceCrud[models.Categorias]) *CategoriaController{
+func NewCategoriaController(sc *services.CategoriaService) *CategoriaController{
 
+	baseController:= NewBaseController[models.Categorias](sc)
 	return &CategoriaController{
-		BaseController: NewBaseController[models.Categorias](sc),
+		BaseController: baseController,
+		categoriaService: sc,
 	}
 }
-
-var _ interfaces.ControllerApiRest[models.Categorias] = (*CategoriaController)(nil)

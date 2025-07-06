@@ -94,7 +94,7 @@ func (bc *BaseController[t]) Post() http.HandlerFunc {
 
 		err = bc.service.Save(request)
 		if err != nil {
-			log.Println("ERRO: falha em salvar os dados")
+			log.Println("ERRO: falha em salvar os dados:", err)
 			utils.ResponseJsonError(w, http.StatusInternalServerError, "erro interno ao processar requisição")
 			return
 		}
