@@ -3,12 +3,12 @@ package models
 import (
 	"time"
 
-	"github.com/google/uuid"
+	
 	
 )
 
 type Categorias struct {
-	Id_categoria   uuid.UUID 
+	Id_categoria   int
 	Nome         string 
 	Criacao time.Time
 	Atualizao time.Time
