@@ -3,11 +3,10 @@ package models
 import (
 	"time"
 
-	"github.com/google/uuid"
 )
 
 type Status struct {
-	Id_status uuid.UUID  
+	Id_status int  
 	Nome      string      
 	Criacao time.Time		
 	Atualizao time.Time		
