@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
 )
 
@@ -13,7 +12,7 @@ type CategoriasRepository struct {
 	*Repository
 }
 
-func NewCategoriaRepository(db *sql.DB) interfaces.RepositoryCrud[models.Categorias] {
+func NewCategoriaRepository(db *sql.DB) *CategoriasRepository {
 
 	return &CategoriasRepository{
 		Repository: NewRepository(db),
@@ -23,7 +22,34 @@ func NewCategoriaRepository(db *sql.DB) interfaces.RepositoryCrud[models.Categor
 
 // Create implements interfaces.RepositoryCrud.
 func (c *CategoriasRepository) Create(entity models.Categorias) error {
-	return fmt.Errorf("teste")
+	
+	query:= `
+
+	insert into Categorias  (nome, criacao, atualizacao) values (@nome, @criacao, @atualizacao);
+	SELECT SCOPE_IDENTITY(); 
+	
+	`
+
+	stmt, err:= c.Db.Prepare(query)
+	if err != nil {
+		return  fmt.Errorf("erro ao preparar o statement de Create em categorias: %v", err)
+	}
+
+	_, err = stmt.Exec(
+
+		sql.Named("nome", entity.Nome),
+		sql.Named("criacao", entity.Criacao),
+		sql.Named("atualizacao", entity.Atualizao),
+
+	)	
+
+	if err != nil {
+
+		return  fmt.Errorf("erro no stmt de create em categorias: %v", err)
+	}
+
+
+	return  nil
 }
 
 // Delete implements interfaces.RepositoryCrud.

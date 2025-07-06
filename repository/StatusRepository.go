@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
+
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
 )
 
@@ -12,7 +12,7 @@ type StatusRepository struct {
 	*Repository
 }
 
-func NewStatusRepository(db *sql.DB) interfaces.RepositoryCrud[models.Status] {
+func NewStatusRepository(db *sql.DB) *StatusRepository {
 
 	return &StatusRepository{
 		Repository: NewRepository(db),
@@ -21,7 +21,33 @@ func NewStatusRepository(db *sql.DB) interfaces.RepositoryCrud[models.Status] {
 
 // Create implements interfaces.RepositoryCrud.
 func (s *StatusRepository) Create(entity models.Status) error {
-	return fmt.Errorf("teste")
+	
+	query:= `
+
+		insert into status (nome, criacao, atualizacao) values (@nome, @criacao, @atualizacao);
+		SELECT SCOPE_IDENTITY();
+
+	`
+
+	stmt, err:= s.Db.Prepare(query)
+	if err != nil {
+
+		return  fmt.Errorf("erro ao preparar query em Create Status: %v", err)
+	}
+
+	_, err = stmt.Exec(
+
+		sql.Named("nome", entity.Nome),
+		sql.Named("criacao", entity.Criacao),
+		sql.Named("atualizacao", entity.Atualizao),
+	)
+
+	if err != nil {
+
+		return fmt.Errorf("erro ao preparar statement: %v", err)
+	}
+
+	return  nil
 }
 
 // Delete implements interfaces.RepositoryCrud.
