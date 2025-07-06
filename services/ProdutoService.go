@@ -3,19 +3,20 @@ package services
 import (
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
+	"github.com/DaviFernandes034/SGE--gestao-de-estoque/repository"
 )
 
 type ProdutoService struct {
-	*BaseService[models.Produtos]
+	repoProduto *repository.ProdutoRepository
 }
 
 
 
-func NewProdutoService(rp interfaces.RepositoryCrud[models.Produtos]) interfaces.ServiceCrud[models.Produtos] {
+func NewProdutoService(rp *repository.ProdutoRepository) interfaces.ServiceCrud[models.Produtos] {
 
 	return &ProdutoService{
 
-		BaseService: NewBaseService[models.Produtos](rp),
+		repoProduto: rp,
 	}
 }
 

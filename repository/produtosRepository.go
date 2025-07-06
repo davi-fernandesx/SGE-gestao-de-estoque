@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
 )
 
@@ -14,7 +13,7 @@ type ProdutoRepository struct {
 }
 
 
-func NewProdutoRepository(db *sql.DB) interfaces.RepositoryCrud[models.Produtos] {
+func NewProdutoRepository(db *sql.DB) *ProdutoRepository {
 
 	return &ProdutoRepository{
 
