@@ -1,8 +1,10 @@
 package services
 
 import (
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
+	"time"
+
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
+	dtos "github.com/DaviFernandes034/SGE--gestao-de-estoque/models/dtos/request"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/repository"
 )
 
@@ -12,7 +14,7 @@ type ProdutoService struct {
 
 
 
-func NewProdutoService(rp *repository.ProdutoRepository) interfaces.ServiceCrud[models.Produtos] {
+func NewProdutoService(rp *repository.ProdutoRepository) *ProdutoService {
 
 	return &ProdutoService{
 
@@ -26,8 +28,30 @@ func (p *ProdutoService) Delete(id int) error {
 }
 
 // Save implements interfaces.ServiceCrud.
-func (p *ProdutoService) Save(entity models.Produtos) error {
-	panic("unimplemented")
+func (p *ProdutoService) Save(entity dtos.ProdutosRequest) error {
+
+	produto:= models.Produtos{
+		Nome: entity.Nome,
+		Descricao: entity.Descricao,
+		Preco: entity.Preco,
+		Lote: entity.Lote,
+		Quantidade: entity.Quantidade,
+		Validade: entity.Validade,
+		CategoriaId: entity.Categoria,
+		StatusId: entity.Status,
+		Criacao: time.Now(),
+		Atualizacao: time.Now(),
+		DataChegada: entity.DataChegada,
+
+	}
+
+	err:= p.repoProduto.Create(produto)
+	if err != nil {
+		return  err
+	}
+
+
+	return  nil
 }
 
 // SearchAll implements interfaces.ServiceCrud.

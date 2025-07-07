@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
+	dtos "github.com/DaviFernandes034/SGE--gestao-de-estoque/models/dtos/request"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/repository"
 )
 
@@ -16,7 +16,7 @@ type StatusService struct {
 
 
 
-func NewStatusService(rs *repository.StatusRepository) interfaces.ServiceCrud[models.Status] {
+func NewStatusService(rs *repository.StatusRepository) *StatusService {
 
 	return &StatusService{
 		repo: rs,
@@ -30,17 +30,16 @@ func (s *StatusService) Delete(id int) error {
 }
 
 // Save implements interfaces.ServiceCrud.
-func (s *StatusService) Save(entity models.Status) error {
+func (s *StatusService) Save(entity dtos.StatusRequest) error {
 	
 if strings.TrimSpace(entity.Nome) == "" {
 
 	return  fmt.Errorf("campo nome nao pode ser em branco")
 }
 	status:= models.Status{
-		Id_status: entity.Id_status, 
 		Nome: entity.Nome,
 		Criacao: time.Now(),
-		Atualizao: time.Now(),
+		Atualizacao: time.Now(),
 	}
 
 	err:= s.repo.Create(status)

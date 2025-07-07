@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/DaviFernandes034/SGE--gestao-de-estoque/interfaces"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/models"
+	dtos "github.com/DaviFernandes034/SGE--gestao-de-estoque/models/dtos/request"
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/repository"
 )
 
@@ -17,25 +17,26 @@ type CategoriaService struct {
 }
 
 
-func NewCategoriaService(repo *repository.CategoriasRepository) interfaces.ServiceCrud[models.Categorias] {
+func NewCategoriaService(repo *repository.CategoriasRepository) *CategoriaService {
 
 	return &CategoriaService{
 		repoCategoria: repo,
 	}
 }
 
-func (cs *CategoriaService) Save(entity models.Categorias) error {
 
-	if strings.TrimSpace(entity.Nome) == "" {
+
+func (cs *CategoriaService) Save(entityDtoRequest dtos.CategoriasRequest) error {
+
+	if strings.TrimSpace(entityDtoRequest.Nome) == "" {
 
 		return  fmt.Errorf("nome da categoria não pode estar vazio")
 	}
 
 	categoria:= models.Categorias{
-		Id_categoria: entity.Id_categoria,
-		Nome: entity.Nome,
+		Nome: entityDtoRequest.Nome,
 		Criacao: time.Now(),
-		Atualizao: time.Now(),
+		Atualizacao: time.Now(),
 	}
 
 
@@ -64,7 +65,4 @@ func (cs *CategoriaService) SearchAll() ([]models.Categorias, error){
 	return nil, nil
 }
 
-func (cs *CategoriaService) Update(entity models.Categorias){}
-
-
-var _ interfaces.ServiceCrud[models.Categorias] = (*CategoriaService)(nil)
+func (cs *CategoriaService) Update(entity dtos.CategoriasRequest){}
