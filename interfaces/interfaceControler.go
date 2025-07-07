@@ -2,7 +2,7 @@ package interfaces
 
 import "net/http"
 
-type ControllerApiRest[t any] interface {
+type ControllerApiRest interface {
 	Get() http.HandlerFunc
 	GetAll() http.HandlerFunc
 	Post()http.HandlerFunc
