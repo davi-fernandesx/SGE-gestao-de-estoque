@@ -17,6 +17,7 @@ func NewCategoriaRepository(db *sql.DB) *CategoriasRepository {
 	return &CategoriasRepository{
 		Repository: NewRepository(db),
 	}
+	
 }
 
 
@@ -35,11 +36,12 @@ func (c *CategoriasRepository) Create(entity models.Categorias) error {
 		return  fmt.Errorf("erro ao preparar o statement de Create em categorias: %v", err)
 	}
 
+	defer stmt.Close()
 	_, err = stmt.Exec(
 
 		sql.Named("nome", entity.Nome),
 		sql.Named("criacao", entity.Criacao),
-		sql.Named("atualizacao", entity.Atualizao),
+		sql.Named("atualizacao", entity.Atualizacao),
 
 	)	
 

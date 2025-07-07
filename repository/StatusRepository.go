@@ -39,8 +39,10 @@ func (s *StatusRepository) Create(entity models.Status) error {
 
 		sql.Named("nome", entity.Nome),
 		sql.Named("criacao", entity.Criacao),
-		sql.Named("atualizacao", entity.Atualizao),
+		sql.Named("atualizacao", entity.Atualizacao),
 	)
+
+	defer stmt.Close()
 
 	if err != nil {
 
