@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"strconv"
@@ -10,15 +9,11 @@ import (
 	"github.com/DaviFernandes034/SGE--gestao-de-estoque/utils"
 )
 
-
-
 type BaseController[t any] struct {
 	service interfaces.ServiceCrud[t]
 }
 
-
 func NewBaseController[t any](service interfaces.ServiceCrud[t]) *BaseController[t] {
-
 
 	return &BaseController[t]{
 		service: service,
@@ -28,7 +23,6 @@ func NewBaseController[t any](service interfaces.ServiceCrud[t]) *BaseController
 func (bc *BaseController[t]) GetAll() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
- 
 
 		result, err := bc.service.SearchAll()
 		if err != nil {
@@ -53,7 +47,7 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 		if param == "" {
 			log.Println("ERRO: cliente não passou o parametro id")
 			utils.ResponseJsonError(w, http.StatusBadRequest, "passar o Id")
-			return 
+			return
 		}
 
 		id, err := strconv.Atoi(param)
@@ -67,7 +61,7 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 		if err != nil {
 			log.Printf("ERRO: erro encontrado em SearchID do pacote service: %v", err)
 			utils.ResponseJsonError(w, http.StatusBadGateway, "Erro ao buscar o ID")
-			return 
+			return
 		}
 
 		response := map[string]any{
@@ -76,34 +70,6 @@ func (bc *BaseController[t]) Get() http.HandlerFunc {
 
 		utils.ResponseJSON(w, http.StatusOK, response)
 	}
-}
-
-func (bc *BaseController[t]) Post() http.HandlerFunc {
-
-	return func(w http.ResponseWriter, r *http.Request) {
-
-		var request t
-
-		err := json.NewDecoder(r.Body).Decode(&request)
-		if err != nil {
-
-			log.Printf("ERRO: erro ao decodificar json: %v", err)
-		    utils.ResponseJsonError(w, http.StatusBadRequest, "Dados invalidos")
-			return
-		}
-
-		err = bc.service.Save(request)
-		if err != nil {
-			log.Println("ERRO: falha em salvar os dados:", err)
-			utils.ResponseJsonError(w, http.StatusInternalServerError, "erro interno ao processar requisição")
-			return
-		}
-
-
-		utils.ResponseJSON(w, http.StatusOK, request)
-
-	}
-
 }
 
 // Delete implements interfaces.ControllerApiRest.
@@ -115,6 +81,3 @@ func (bc *BaseController[t]) Delete() http.HandlerFunc {
 func (bc *BaseController[t]) Update() http.HandlerFunc {
 	panic("unimplemented")
 }
-
-var _ interfaces.ControllerApiRest[any] = (*BaseController[any])(nil)
-

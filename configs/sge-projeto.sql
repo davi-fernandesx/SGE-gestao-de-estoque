@@ -74,3 +74,5 @@ create table papeis (
 );
 
 go
+ select * from status;
+ select * from Categorias;
