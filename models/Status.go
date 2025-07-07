@@ -9,5 +9,5 @@ type Status struct {
 	Id_status int  
 	Nome      string      
 	Criacao time.Time		
-	Atualizao time.Time		
+	Atualizacao time.Time		
 }

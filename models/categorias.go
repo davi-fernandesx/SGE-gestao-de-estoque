@@ -11,5 +11,5 @@ type Categorias struct {
 	Id_categoria   int
 	Nome         string 
 	Criacao time.Time
-	Atualizao time.Time
+	Atualizacao time.Time
 }
