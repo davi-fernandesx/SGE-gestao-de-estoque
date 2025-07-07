@@ -20,19 +20,23 @@ func SetupRouter(db *sql.DB) *http.ServeMux{
 		log.Println("INFO: repositorys conectado com o banco de dados")
 		categoriaRepo:= repository.NewCategoriaRepository(db)
 		statusRepo:= repository.NewStatusRepository(db)
+		ProdutoRepo:= repository.NewProdutoRepository(db)
 	
 		log.Println("INFO: services conectado com a camada de repository")
 		categoriaService:= services.NewCategoriaService(categoriaRepo)
 		statusService:= services.NewStatusService(statusRepo)
+		produtoService:= services.NewProdutoService(ProdutoRepo)
 	
 
 		log.Println("INFO: controllers conectado com a camada de serviços")
-		categoriaController:= controller.NewCategoriaController(  categoriaService.(*services.CategoriaService))
-		statusController:=controller.NewStatusController(statusService.(*services.StatusService))
+		categoriaController:= controller.NewCategoriaController( categoriaService)
+		statusController:=controller.NewStatusController(statusService)
+		produtoController:= controller.NewProdutoController(produtoService)
 	
 
 		RoutesCategorias(mux, categoriaController)
 		RoutesStatus(mux, statusController)
+		RoutesProduto(mux, produtoController)
 
 
 		

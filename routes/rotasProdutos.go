@@ -11,21 +11,12 @@ import (
 func RoutesProduto(mux *http.ServeMux, ProdutoController *controller.ProdutoController) {
 
 
-	mux.HandleFunc("/api/produtoGet", middleware.LoggerMiddleware(
-				middleware.MethodMiddleware([]string{http.MethodGet},
-					ProdutoController.Get()),
-				),)
+		mux.HandleFunc("/api/produto",
+			middleware.LoggerMiddleware(
+				middleware.MethodMiddleware([]string{http.MethodPost},
+				ProdutoController.Post()),))
 
-	mux.HandleFunc("/api/produtos",middleware.LoggerMiddleware(
-				middleware.MethodMiddleware([]string{http.MethodGet},
-					ProdutoController.GetAll()),
-				),)
-
-	mux.HandleFunc("/api/produto", middleware.LoggerMiddleware(
-				middleware.MethodMiddleware([]string{http.MethodGet},
-					ProdutoController.Post()),
-				),)
-
+				
 	log.Println("INFO: Rotas de Produto carregadas.")
 	
 }

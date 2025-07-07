@@ -10,17 +10,7 @@ import (
 
 func RoutesCategorias(mux *http.ServeMux, categoriaController *controller.CategoriaController) {
 
-	mux.HandleFunc("/api/categoriaGet",
-			middleware.LoggerMiddleware(
-				middleware.MethodMiddleware([]string{http.MethodGet},
-					categoriaController.Get()),	
-					),)
 
-	mux.HandleFunc("/api/categorias", 
-			middleware.LoggerMiddleware(
-				middleware.MethodMiddleware([]string{http.MethodGet},
-					categoriaController.GetAll()),
-			))
 
 	mux.HandleFunc("/api/categoria",
 			middleware.LoggerMiddleware(
